@@ -1,64 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-<title>Hacking horse</title>
-<style>
-div.main{
-	position: relative;
-	height: 600px;
-	width: 1000px;
-	background-image: url('55042481.jpg');
-	background-repeat: repeat-x;
-	animation: mainAnim 4s cubic-bezier(0,0,1,1) infinite;
-
-}	
-@keyframes mainAnim {
-    	0%{ background-position: 0px 0px;}
-		100%{ background-position: -1020px 0px;}
-}
-
-div.road {
-	height: 200px;
-	width: 1000px;
-	bottom: -50px;
-	position: absolute;
-	background-image: url('parallax_mountain_pack/1.png');
-	background-repeat: repeat-x;
-	animation: groundAnim 2s infinite linear;
-}
-@keyframes groundAnim {
-    	0%{ background-position: 0px 0px;}
-		100%{ background-position: -817px 0px;}
-}
-div.dude {
-	height: 244px;
-	width: 192px;
-	bottom: 30px;
-	left: 80px;
-	position: absolute;
-	//animation: dudeAnim 2s infinite linear;
-}
-@keyframes dudeAnim {
-    	0%{ bottom: 20px;}
-		50%{ bottom: 200px;}
-		100%{ bottom: 20px;}
-}
-</style>
-<script src = "game.js"></script>
+  <meta charset="UTF-8">
+  <title>Hacking horse</title>
+  <!--link rel="stylesheet" href="hacking.css" type="text/css" media="screen"-->
 </head>
-<body onkeydown="jump(event);">
-
-<div class="main">
-	<div class="road">
-	</div>
-	<div class="dude">
-	 <img src='1.png' width=244px height=192px id = "rider">
-	</div>
-</div>
-
-
+<body>
+  <div class="wrapper">
+    <canvas id="canvas" width="1023" height="653">
+      <p>You're browser does not support the required functionality to play this game.</p>
+      <p>Please update to a modern browser such as <a href="www.google.com/chrome/‎">Google Chrome</a> to play.</p>
+    </canvas>
+	<div id="game-over">
+      <a href="javascript:void(0);" class="restart" id="restart">Try again?</a>
+    </div>
+  </div>
+  <script type="text/javascript" src="hacking.js"></script>
 </body>
 </html>
