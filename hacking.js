@@ -22,7 +22,8 @@
     this.imgs        = {
       'forest'        : 'media/Forest.jpg',
       'rider' 		  : 'media/Rider.png',
-	  'brevno'	 	  : 'media/brevno.png'
+	  'log'	 	  	  : 'media/Log.png',
+	  'bush'		  : 'media/Bush.png'
     };
 
     var assetsLoaded = 0;                                // how many assets have been loaded
@@ -81,12 +82,12 @@
   })();
 
   assetLoader.finished = function() {
-	  if (confirm("Ready to start?"))
+	  //if (confirm("Ready to start?"))
 			startGame();
-		else {
-			history.pushState(null, "foo", 'file:///D:/Hacking%20horse/index.html');
-			location.href = "http://lurkmore.so/images/thumb/4/4d/Intlich.jpg/300px-Intlich.jpg";  
-		}
+		// else {
+			// history.pushState(null, "foo", 'file:///D:/Hacking%20horse/index.html');
+			// location.href = "http://lurkmore.so/images/thumb/4/4d/Intlich.jpg/300px-Intlich.jpg";  
+		// }
   }
 
   /**
@@ -169,7 +170,7 @@
      */
     this.draw = function() {
        // Pan background
-      forest.x -= forest.speed;
+      forest.x -= this.speed;
 
       // draw images side by side to loop
       ctx.drawImage(assetLoader.imgs.forest, forest.x, forest.y);
@@ -186,7 +187,7 @@
     this.reset = function()  {
       forest.x = 0;
       forest.y = 0;
-      forest.speed = 5;
+      this.speed = 5;
    }
 
     return {
@@ -384,13 +385,16 @@
    * Spawn new enemy sprites off screen
    */
   function spawnEnemySprites() {
-    if (score > 100 && Math.random() > 0.96 && enemies.length < 3) {
-	  if(enemies.length > 1 && enemies[enemies.length - 1].x + enemies[enemies.length - 1].width + player.width < canvas.width + 50)
-	  {
-		enemies.push(new Sprite(canvas.width + 50, 460, 200, 92, 'brevno'));
+    if (score > 100 && Math.random() > 0.9 && enemies.length < 3) {
+	  if(enemies.length >= 1)
+	  {  
+		if(enemies[enemies.length - 1].x + enemies[enemies.length - 1].width + player.width < canvas.width+100)
+			(score>1500 && Math.random() > 0.5) ? enemies.push(new Sprite(canvas.width + 50, 442, 146, 110, 'bush'))
+				:enemies.push(new Sprite(canvas.width + 50, 460, 200, 92, 'log'));
 	  }
 	  else {
-        enemies.push(new Sprite(canvas.width + 50, 460, 200, 92, 'brevno'));
+        (score>1500 && Math.random() > 0.5) ? enemies.push(new Sprite(canvas.width + 50, 442, 146, 110, 'bush'))
+				:enemies.push(new Sprite(canvas.width + 50, 460, 200, 92, 'log'));
 	  }
     }
   }
@@ -410,6 +414,11 @@
 		if (score % Math.floor(32 / player.speed) === 0) {
         spawnEnemySprites();
       }
+		if(score % 100 === 0)
+		{
+			player.speed += 0.1;
+			background.speed += 0.1;
+		}
 		updateEnemies();
 		updatePlayer();
 		ctx.fillText('Score: ' + score + 'm', canvas.width - 140, 30);
