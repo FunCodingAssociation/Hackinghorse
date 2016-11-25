@@ -83,13 +83,31 @@
 
   assetLoader.finished = function() {
 	  //if (confirm("Ready to start?"))
-			startGame();
+			//startGame();
 		// else {
 			// history.pushState(null, "foo", 'file:///D:/Hacking%20horse/index.html');
 			// location.href = "http://lurkmore.so/images/thumb/4/4d/Intlich.jpg/300px-Intlich.jpg";  
 		// }
+		 mainMenu();
   }
 
+function mainMenu() {
+  $('#main').show(300);
+ }
+
+ $('.play').click(function() {
+  $('#menu').hide(1000, startGame());
+ });
+ $('.credits').click(function() {
+  $('#credits').show(500, function() {$('#menu').hide();});
+ });
+ $('.back').click(function() {
+  $('#credits').hide(500);
+  $('#menu').show();
+
+ });
+ 
+  
   /**
    * Creates a Spritesheet
    * @param {string} - Path to the image.
@@ -316,6 +334,7 @@
     player.reset = function() {
       player.x = 64;
       player.y = 310;
+	  player.speed = 10;
     };
 
     return player;
@@ -416,7 +435,7 @@
       }
 		if(score % 100 === 0)
 		{
-			player.speed += 0.1;
+			player.speed += 0.2;
 			background.speed += 0.1;
 		}
 		updateEnemies();
@@ -477,8 +496,8 @@
 	stop = false;
     score = 0;
     ctx.font = '16px arial, sans-serif';
-	ctx.fillStyle="#FF0000";
-
+	ctx.fillStyle="#FFFFFF";
+    enemies = [];
     background.reset();
 
     animate();
@@ -487,19 +506,29 @@
    /**
    * End the game and restart
    */
-  function gameOver() {
-    stop = true;
-	document.cookie = "username=John Doe";
-	document.cookieEnabled = "true";
-	if (confirm("Your score is " + score+ "m\n Restart?")) {
-		alert(document.cookie);
-		location.reload();
-	}
-	else
-		location.href = "http://lurkmore.so/images/thumb/4/4d/Intlich.jpg/300px-Intlich.jpg";
-    document.getElementById('game-over').style.display = 'block';
-  }
+function gameOver() {
+  stop = true;	
+  $('#score').html(score);
+  $('#game-over').show(200);
+}
 
-  document.getElementById('restart').addEventListener('click', startGame);
+/**
+ * Click handlers for the different menu screens
+ */
+// …
+$('.yes').click(function() {
+  $('#game-over').hide();
+  startGame();
+});
+
+$('.no').click(function() {
+  $('#game-over').hide(500);
+  $('#strange').show(500);
+  setTimeout(function() {
+    $('#strange').hide(500, startGame());
+  }, 2500); 
+
+});
+   
   assetLoader.downloadAll();
 })();
